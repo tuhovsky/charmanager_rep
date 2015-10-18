@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'charmanager_app/style.css' %}" />
+
+<form action="{% url 'charmanager_app:view-all-usercharacters' %}" method="get" >
+    <h2>Specialization {{ filter_form.specialization }} Gender {{ filter_form.gender }}</h2>
+    <input type="text" name="search_field" value="">
+    <button>search</button>
+</form>
+
+<h1>UserCharacters</h1>
+{% for usercharacter in usercharacters %}
+    {# Each "usercharacter" is a UserCharacter model object. #}
+    <li><a href="{% url 'charmanager_app:usercharacter-detail' usercharacter.id %}">{{ usercharacter.username }} {{ usercharacter.nickname }} ({{ usercharacter.get_specialization_display }} {{ usercharacter.gender }})</a></li>
+
+{% endfor %}
+<br>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if usercharacters.has_previous %}
+            <a href="?page={{ usercharacters.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ usercharacters.number }} of {{ usercharacters.paginator.num_pages }}.
+        </span>
+
+        {% if usercharacters.has_next %}
+            <a href="?page={{ usercharacters.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<br>
+
+
+<a href="{% url 'charmanager_app:register' %}">Registration</a>
