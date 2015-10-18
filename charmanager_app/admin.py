@@ -1,9 +1,9 @@
 from django.contrib import admin
-
+from django.contrib.auth.admin import UserAdmin
 from .models import UserCharacter, Skill
 
 
-class UserCharacterAdmin(admin.ModelAdmin):
+class UserCharacterAdmin(UserAdmin):
     fieldsets = [
         ('Dates Information', {
          'fields': ['date_joined', 'last_login']}),

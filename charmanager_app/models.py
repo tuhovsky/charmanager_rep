@@ -4,7 +4,8 @@ from django.contrib.auth.models import AbstractUser
 
 class Skill(models.Model):
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True, error_messages={
+                             'unique': 'That skill already exists.'})
     description = models.CharField(max_length=255)
 
     def __str__(self):

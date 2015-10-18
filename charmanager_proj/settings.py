@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'charmanager_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'charmanager_db',
+        'NAME': 'charmanager',
         'USER': 'postgres',
         'PASSWORD': 'y5sgh16mc8',
         'HOST': '127.0.0.1',
