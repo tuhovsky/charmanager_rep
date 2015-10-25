@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, render_to_response
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib import auth
 
 from .models import UserCharacter, Skill
 from .forms import UserCharacterForm, UserCharacterChangeForm, \
@@ -67,6 +68,7 @@ def view_all_usercharacters(request):
                   {'usercharacters': usercharacters,
                    'filter_form': FilterForm,
                    'paginator': paginator,
+
                    }
                   )
 
@@ -88,4 +90,9 @@ def usercharacter_detail(request, usercharacter_id):
     return render(request,
                   'charmanager_app/usercharacter_detail.html',
                   {'form': form, 'usercharacter': usercharacter})
+
+
+# test work with cookies
+
+
 # Create your views here.
