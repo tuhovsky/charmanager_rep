@@ -87,12 +87,22 @@ def usercharacter_detail(request, usercharacter_id):
             )
     else:
         form = UserCharacterChangeForm(instance=usercharacter)
-    return render(request,
-                  'charmanager_app/usercharacter_detail.html',
-                  {'form': form, 'usercharacter': usercharacter})
+    if str(request.user) == usercharacter.username:
+        return render(request,
+                      'charmanager_app/usercharacter_detail.html',
+                      {'form': form, 'usercharacter': usercharacter})
+    else:
+        return render(request,
+                      'charmanager_app/usercharacter_detail_not_auth.html',
+                      {'usercharacter': usercharacter})
 
 
 # test work with cookies
 
-
+def my_view(request):
+    if not request.user.is_authenticated():
+        return HttpResponse("Вы не аутентифицированы")
+    else:
+        return HttpResponse("Вы аутентифицированы %s" %
+                            request.user)
 # Create your views here.

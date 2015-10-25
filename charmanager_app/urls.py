@@ -23,4 +23,8 @@ urlpatterns = [
     url(r'^accounts/logout/$',
         logout,
         name='logout'),
+
+    url(r'^my_view$',
+        views.my_view,
+        name='my_view'),
 ]
