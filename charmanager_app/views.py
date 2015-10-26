@@ -1,9 +1,8 @@
-from django.shortcuts import get_object_or_404, render, render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.contrib import auth
 
 from .models import UserCharacter, Skill
 from .forms import UserCharacterForm, UserCharacterChangeForm, \
@@ -17,18 +16,22 @@ def register(request):
         if form.is_valid():
             new_user = form.save()
             return HttpResponseRedirect(
-                reverse
-                ('charmanager_app:usercharacter-detail',
-                    args=(new_user.id,))
+                reverse(
+                    'charmanager_app:usercharacters-list'
+                )
             )
     else:
         form = UserCharacterCreationForm()
-    return render(request,
-                  "charmanager_app/register.html",
-                  {'form': form})
+    return render(
+        request,
+        "registration/register.html",
+        {
+            'form': form
+        }
+    )
 
 
-def view_all_usercharacters(request):
+def usercharacters_list(request):
 
     queryset = UserCharacter.objects.all()
 
@@ -41,7 +44,8 @@ def view_all_usercharacters(request):
         query_params['gender'] = request.GET['gender']
 
     search_field = request.GET[
-        'search_field'] if request.GET.get('search_field') else ""
+        'search_field'
+    ] if request.GET.get('search_field') else ""
 
     queryset = queryset.filter(
         Q(username__icontains=search_field) |
@@ -63,46 +67,40 @@ def view_all_usercharacters(request):
         # results.
         usercharacters = paginator.page(paginator.num_pages)
 
-    return render(request,
-                  'charmanager_app/view_all_usercharacters.html',
-                  {'usercharacters': usercharacters,
-                   'filter_form': FilterForm,
-                   'paginator': paginator,
-
-                   }
-                  )
+    return render(
+        request,
+        'charmanager_app/usercharacters_list.html',
+        {
+            'usercharacters': usercharacters,
+            'filter_form': FilterForm,
+            'paginator': paginator,
+        }
+    )
 
 
 def usercharacter_detail(request, usercharacter_id):
     usercharacter = get_object_or_404(UserCharacter, pk=usercharacter_id)
     if request.method == 'POST':
         form = UserCharacterChangeForm(
-            request.POST, instance=usercharacter)
+            request.POST, instance=usercharacter
+        )
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(
-                reverse
-                ('charmanager_app:usercharacter-detail',
-                 args=(usercharacter.id,))
+                reverse(
+                    'charmanager_app:usercharacter-detail',
+                    args=(usercharacter.id,)
+                )
             )
     else:
         form = UserCharacterChangeForm(instance=usercharacter)
-    if str(request.user) == usercharacter.username:
-        return render(request,
-                      'charmanager_app/usercharacter_detail.html',
-                      {'form': form, 'usercharacter': usercharacter})
-    else:
-        return render(request,
-                      'charmanager_app/usercharacter_detail_not_auth.html',
-                      {'usercharacter': usercharacter})
+    return render(
+        request,
+        'charmanager_app/usercharacter_detail.html',
+        {
+            'form': form,
+            'usercharacter': usercharacter,
+        }
+    )
 
-
-# test work with cookies
-
-def my_view(request):
-    if not request.user.is_authenticated():
-        return HttpResponse("Вы не аутентифицированы")
-    else:
-        return HttpResponse("Вы аутентифицированы %s" %
-                            request.user)
 # Create your views here.

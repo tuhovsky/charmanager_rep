@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^charmanager_app/',
+    url(r'^charmanager-app/',
         include('charmanager_app.urls', namespace="charmanager_app")),
     url(r'^admin/', include(admin.site.urls)),
 ]

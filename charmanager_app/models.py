@@ -14,6 +14,7 @@ class Skill(models.Model):
 
 AbstractUser._meta.get_field('email')._unique = True
 AbstractUser._meta.get_field('email').blank = False
+AbstractUser._meta.get_field('username').help_text = ''
 
 
 class UserCharacter(AbstractUser):
@@ -23,7 +24,6 @@ class UserCharacter(AbstractUser):
                               ('As', 'Assassin'), ('Rg', 'Ranger'),
                               ('Sc', 'Sorcerer'), ('Sm', 'Spiritmaster'),
                               ('Hl', 'Healer'), ('Ch', 'Chanter'))
-
     skills = models.ManyToManyField(Skill)
     nickname = models.CharField(max_length=255, blank=True)
     level = models.PositiveIntegerField(default=1)

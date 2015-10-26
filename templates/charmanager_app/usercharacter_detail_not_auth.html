@@ -1,8 +1,0 @@
-    <label>Username - {{ usercharacter.username }}</label><br>
-    <label>Nickname - {{ usercharacter.nickname }}</label><br>
-    <label>Gender - {{ usercharacter.get_gender_display }}</label><br>
-    <label>Level - {{ usercharacter.level }}</label><br>
-    <label>Specialization - {{ usercharacter.get_specialization_display }}</label><br>
-    <label>{{ usercharacter.skills }}</label><br><br>
-
-    <a href="{% url 'charmanager_app:view-all-usercharacters' %}">Back to list</a>

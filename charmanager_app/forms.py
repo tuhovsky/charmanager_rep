@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+
 from .models import UserCharacter
 
 
@@ -8,8 +9,10 @@ class UserCharacterForm(ModelForm):
 
     class Meta:
         model = UserCharacter
-        fields = ['username', 'nickname',
-                  'gender', 'level', 'specialization', 'skills', ]
+        fields = [
+            'username', 'nickname', 'gender', 'level', 'specialization',
+            'skills',
+        ]
 
 
 class UserCharacterChangeForm(UserChangeForm):
@@ -20,19 +23,25 @@ class UserCharacterChangeForm(UserChangeForm):
 
     class Meta:
         model = UserCharacter
-        fields = ['username', 'nickname',
-                  'gender', 'level', 'specialization', 'skills', ]
+        fields = [
+            'username', 'nickname', 'gender', 'level', 'specialization',
+            'skills',
+        ]
 
 
 class UserCharacterCreationForm(UserCreationForm):
 
     class Meta:
         model = UserCharacter
-        fields = ['username', 'email']
+        fields = [
+            'username', 'email'
+        ]
 
 
 class FilterForm(ModelForm):
 
     class Meta:
         model = UserCharacter
-        fields = ('specialization', 'gender', )
+        fields = (
+            'specialization', 'gender',
+        )

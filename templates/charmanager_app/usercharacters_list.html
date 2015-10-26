@@ -1,19 +1,20 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'charmanager_app/style.css' %}" />
 
-<form action="{% url 'charmanager_app:view-all-usercharacters' %}" method="get" >
+<form action="{% url 'charmanager_app:usercharacters-list' %}" method="get" >
     <h2>Specialization {{ filter_form.specialization }} Gender {{ filter_form.gender }}</h2>
     <input type="text" name="search_field" value="">
     <button>search</button>
 </form>
 
 <h1>UserCharacters</h1>
+
 {% for usercharacter in usercharacters %}
+
     {# Each "usercharacter" is a UserCharacter model object. #}
     <li><a href="{% url 'charmanager_app:usercharacter-detail' usercharacter.id %}">{{ usercharacter.username }} {{ usercharacter.nickname }} ({{ usercharacter.get_specialization_display }} {{ usercharacter.gender }})</a></li>
 
-{% endfor %}
-<br>
+{% endfor %}<br>
 
 <div class="pagination">
     <span class="step-links">
@@ -32,7 +33,17 @@
 </div>
 <br>
 
+{% if request.user.is_authenticated %}
 
-<a href="{% url 'charmanager_app:register' %}">Registration</a><br>
+Logged as {{ request.user }}
 
-<a href="{% url 'charmanager_app:logout' %}">Logout</a>
+    <a href="{% url 'charmanager_app:logout' %}">logout</a>
+
+{% else %}
+
+You are not logged
+
+    <a href="{% url 'charmanager_app:login' %}">Login</a>
+    <a href="{% url 'charmanager_app:register' %}">Registration</a>
+
+{% endif %}
