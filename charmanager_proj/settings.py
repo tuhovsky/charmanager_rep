@@ -109,3 +109,7 @@ STATIC_URL = '/static/'
 # myself adding
 
 AUTH_USER_MODEL = 'charmanager_app.UserCharacter'
+
+LOGIN_URL = '/charmanager-app/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/charmanager-app/usercharacters-list/'

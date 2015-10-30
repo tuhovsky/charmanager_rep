@@ -1,18 +1,24 @@
-{% if form.errors %}
-
-    Сожалеем, вы неправильно ввели логин или пароль
-
-{% endif %}
-
 <form action='.' method='post'>
+
     {% csrf_token %}
-    <label for="username">Логин:</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Пароль:</label>
-    <input type="password" name="password" value="" id="password">
+
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {{ form.username.errors }}
+
+    {{ form.password.label_tag }}
+    {{ form.password }}
+    {{ form.password.errors }}
+
+    {% if not form.username.errors and not form.password.errors %}
+
+        {{ form.errors }}
+
+    {% endif %}
 
     <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{% url 'charmanager_app:usercharacters-list' %}" />
+    <input type="hidden" name="next" value="{{ next }}" />
+
 </form>
 
 <a href="{% url 'charmanager_app:usercharacters-list' %}">As guest</a>

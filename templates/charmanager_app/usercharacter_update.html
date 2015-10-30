@@ -1,0 +1,10 @@
+Your profile<br>
+
+<form action="{% url 'charmanager_app:usercharacter-update' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" /><br><br>
+
+</form>
+
+<a href="{% url 'charmanager_app:usercharacters-list' %}">Back to list</a>

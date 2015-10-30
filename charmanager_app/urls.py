@@ -25,4 +25,8 @@ urlpatterns = [
         views.usercharacter_detail,
         name='usercharacter-detail'),
 
+    url(r'^usercharacter-update/$',
+        views.usercharacter_update,
+        name='usercharacter-update'),
+
 ]

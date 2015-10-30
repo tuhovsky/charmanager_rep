@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from .models import UserCharacter, Skill
 from .forms import UserCharacterForm, UserCharacterChangeForm, \
@@ -80,6 +81,16 @@ def usercharacters_list(request):
 
 def usercharacter_detail(request, usercharacter_id):
     usercharacter = get_object_or_404(UserCharacter, pk=usercharacter_id)
+    return render(
+        request,
+        'charmanager_app/usercharacter_detail.html',
+        {'usercharacter': usercharacter, }
+    )
+
+
+@login_required()
+def usercharacter_update(request):
+    usercharacter = request.user
     if request.method == 'POST':
         form = UserCharacterChangeForm(
             request.POST, instance=usercharacter
@@ -96,11 +107,11 @@ def usercharacter_detail(request, usercharacter_id):
         form = UserCharacterChangeForm(instance=usercharacter)
     return render(
         request,
-        'charmanager_app/usercharacter_detail.html',
+        'charmanager_app/usercharacter_update.html',
         {
             'form': form,
             'usercharacter': usercharacter,
         }
     )
 
-# Create your views here.
+    # Create your views here.

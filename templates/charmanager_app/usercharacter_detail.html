@@ -1,28 +1,18 @@
-{% if request.user == usercharacter %}
+Profile {{ usercharacter.username }}<br><br>
 
-    Your profile<br>
+Nickname - {{ usercharacter.nickname }}<br>
+Gender - {{ usercharacter.get_gender_display }}<br>
+Level - {{ usercharacter.level }}<br>
+Specialization - {{ usercharacter.get_specialization_display }}<br><br>
+Skills:<br><br>
+{% for skill in usercharacter.skills.all %}
+<li>{{ skill.title }} - {{ skill.description }}</li>
+{% endfor %}<br>
 
-    <form action="{% url 'charmanager_app:usercharacter-detail' usercharacter.id %}" method="post">
-        {% csrf_token %}
-        <!-- <label>{{ form.errors }}</label> -->
-        <label>{{ form.as_p }}</label>
-        <input type="submit" value="Submit" /><br><br>
-        <a href="{% url 'charmanager_app:usercharacters-list' %}">Back to list</a>
-    </form>
+{% if user.is_authenticated and user == usercharacter %}
 
-{% else %}
-
-    Profile {{ usercharacter.username }}<br><br>
-
-    <label>Nickname - {{ usercharacter.nickname }}</label><br>
-    <label>Gender - {{ usercharacter.get_gender_display }}</label><br>
-    <label>Level - {{ usercharacter.level }}</label><br>
-    <label>Specialization - {{ usercharacter.get_specialization_display }}</label><br><br>
-    Skills:<br><br>
-    {% for skill in usercharacter.skills.all %}
-    <li>{{ skill.title }} - {{ skill.description }}</li>
-    {% endfor %}<br>
-
-    <a href="{% url 'charmanager_app:usercharacters-list' %}">Back to list</a>
+    <a href="{% url 'charmanager_app:usercharacter-update' %}">Edit</a><br><br>
 
 {% endif %}
+
+<a href="{% url 'charmanager_app:usercharacters-list' %}">Back to list</a>
